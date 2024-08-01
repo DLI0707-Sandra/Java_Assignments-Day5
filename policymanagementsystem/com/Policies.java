@@ -35,25 +35,22 @@ public class Policies
 
     public void expiringSoon()
     {
-        Set<Policy>expiring=new HashSet<>();
-        Calendar calendar = Calendar.getInstance();
-        Date today = calendar.getTime();
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
-        dateFormat.format(today);
-        System.out.println(today);
-        calendar.add(Calendar.DAY_OF_YEAR, 30);
-        Date thirtyDaysFromNow = calendar.getTime();
-        dateFormat.format(thirtyDaysFromNow);
-        System.out.println(thirtyDaysFromNow);
-        for (Policy policy : policies) {
-            Date expiryDate = policy.getExpiry_date();
-            dateFormat.format(expiryDate);
-            System.out.println(expiryDate);
-            if (!expiryDate.before(today) && !expiryDate.after(thirtyDaysFromNow)) {
-                expiring.add(policy);
+            Set<Policy>expiring=new HashSet<>();
+            LocalDate today = LocalDate.now();
+//        System.out.println(today);
+            LocalDate thirtyDaysFromNow = today.plusDays(30);
+
+//        System.out.println(thirtyDaysFromNow);
+            for (Policy policy : policies) {
+                LocalDate expiryDate = policy.getExpiry_date();
+//            System.out.println(expiryDate);
+                if (!expiryDate.isBefore(today) && !expiryDate.isAfter(thirtyDaysFromNow)) {
+                    expiring.add(policy);
+                }
             }
-        }
-        System.out.println(expiring);
+            System.out.println(expiring);
+
+
     }
 
     public void viewAll()
