@@ -59,20 +59,17 @@ public class Policies
 
     public void expiringSoon()
     {
-        Set<Policy>expiring=new HashSet<>();
-        LocalDate today = LocalDate.now();
-//        System.out.println(today);
-        LocalDate thirtyDaysFromNow = today.plusDays(30);
-
-//        System.out.println(thirtyDaysFromNow);
-        for (Policy policy : policies) {
-            LocalDate expiryDate = policy.getExpiry_date();
-//            System.out.println(expiryDate);
-            if (!expiryDate.isBefore(today) && !expiryDate.isAfter(thirtyDaysFromNow)) {
-                expiring.add(policy);
+        for(Map.Entry<LocalDate,Policy>iterator:policyTreeMap.entrySet())
+        {
+            LocalDate today = LocalDate.now();
+            LocalDate thirtyDaysFromNow = today.plusDays(30);
+            if(iterator.getKey().isAfter(thirtyDaysFromNow))
+            {
+                break;
             }
+            if((iterator.getKey().isAfter(today)||iterator.getKey().equals(today))&&(iterator.getKey().isBefore(thirtyDaysFromNow)||iterator.getKey().equals(thirtyDaysFromNow)))
+                System.out.println(iterator.getValue());
         }
-        System.out.println(expiring);
     }
 
     public void viewAll()
