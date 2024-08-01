@@ -1,5 +1,6 @@
 package policymanagementsystem.com;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -37,12 +38,17 @@ public class Policies
         Set<Policy>expiring=new HashSet<>();
         Calendar calendar = Calendar.getInstance();
         Date today = calendar.getTime();
-
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
+        dateFormat.format(today);
+        System.out.println(today);
         calendar.add(Calendar.DAY_OF_YEAR, 30);
         Date thirtyDaysFromNow = calendar.getTime();
-
+        dateFormat.format(thirtyDaysFromNow);
+        System.out.println(thirtyDaysFromNow);
         for (Policy policy : policies) {
             Date expiryDate = policy.getExpiry_date();
+            dateFormat.format(expiryDate);
+            System.out.println(expiryDate);
             if (!expiryDate.before(today) && !expiryDate.after(thirtyDaysFromNow)) {
                 expiring.add(policy);
             }

@@ -1,12 +1,16 @@
 package policymanagementsystem.com;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class PolicyManagement {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         Policies policies = new Policies();
         Scanner scanner = new Scanner(System.in);
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
         int choice;
         do {
             System.out.println("1.Add new policy\n2.Remove policies\n3.Get all unique policies\n4.Policies expiring soon\n5.Get policies by coverage\n6.Policies with same number\n7.Exit");
@@ -22,9 +26,14 @@ public class PolicyManagement {
                     String policyHolder = scanner.nextLine();
                     System.out.println("Type:");
                     String policyType = scanner.next();
+                    System.out.println("Expiry date(yyyy-mm-dd):");
+                    scanner.nextLine();
+                    String date=scanner.nextLine();
+                    Date expiry_date=null;
+                    expiry_date=dateFormat.parse(date);
                     System.out.println("Coverage:");
                     long policyCoverage = scanner.nextLong();
-                    Policy policy = new Policy(policyNumber, policyHolder, policyType, policyCoverage);
+                    Policy policy = new Policy(policyNumber, policyHolder, policyType,expiry_date, policyCoverage);
                     policies.addPolicy(policy);
                     break;
                 case 2:
@@ -49,7 +58,7 @@ public class PolicyManagement {
                     String number=scanner.next();
                     System.out.println("Policies with number:"+number);
                     policies.getByNumber(number);
-
+                    break;
                 case 7:
                     System.out.println("Exiting!");
                     break;

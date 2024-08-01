@@ -1,5 +1,6 @@
 package policymanagementsystem.com;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Policy
@@ -18,10 +19,11 @@ public class Policy
         this.expiry_date = expiry_date;
     }
 
-    public Policy(String policynumber, String policyholder, String type, long coverage)
+    public Policy(String policynumber, String policyholder, String type,Date expiry_date, long coverage)
     {
         this.policynumber=policynumber;
         this.policyholder=policyholder;
+        this.expiry_date=expiry_date;
         this.type=type;
         this.amount =coverage;
     }
@@ -60,6 +62,7 @@ public class Policy
 
     @Override
     public String toString() {
-        return "Policy Number:"+policynumber+"\nPolicy holder name:"+policyholder+"\nExpiry Date:"+expiry_date+"\nType:"+type+"\nPremium amount"+ amount;
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
+        return "Policy Number:"+policynumber+"\nPolicy holder name:"+policyholder+"\nExpiry Date:"+dateFormat.format(expiry_date)+"\nType:"+type+"\nPremium amount:"+ amount;
     }
 }
