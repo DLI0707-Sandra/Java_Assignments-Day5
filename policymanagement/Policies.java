@@ -1,6 +1,7 @@
 package policymanagement;
 
-import java.text.SimpleDateFormat;
+
+import java.time.LocalDate;
 import java.util.*;
 
 public class Policies
@@ -9,7 +10,7 @@ public class Policies
     Set<Policy> unique_policies=new HashSet<>();
     Map<String ,Policy>policyMap=new HashMap<>();
     Map<String,Policy>policyLinkedMap=new LinkedHashMap<>();
-    Map<Date ,Policy>policyTreeMap=new TreeMap<>();
+    Map<LocalDate ,Policy>policyTreeMap=new TreeMap<>();
     public void addPolicy(Policy policy)
     {
         policies.add(policy);
@@ -25,20 +26,22 @@ public class Policies
                 policies.remove(policies.get(i));
         }
     }
+
+//    public static LocalDate getLocalDateFromDate(LocalDate date) {
+//        return date.toInstant()
+//                .atZone(ZoneId.systemDefault())
+//                .toLocalDate();
+//    }
     public void removeexpiredPolicy()
     {
         for(int i=0;i<policies.size();i++)
         {
-            Calendar calendar = Calendar.getInstance();
-            Date today = calendar.getTime();
-            SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
-            dateFormat.format(today);
+            LocalDate today=LocalDate.now();
             System.out.println(today);
             for (Policy policy : policies) {
-                Date expiryDate = policy.getExpiry_date();
-                dateFormat.format(expiryDate);
+                LocalDate expiryDate = policy.getExpiry_date();
                 System.out.println(expiryDate);
-                if (expiryDate.before(today)) {
+                if (expiryDate.isBefore(today)) {
                     policies.remove(policy);
                     policyMap.remove(policy.policynumber);
                     policyLinkedMap.remove(policy.policynumber);
@@ -57,20 +60,15 @@ public class Policies
     public void expiringSoon()
     {
         Set<Policy>expiring=new HashSet<>();
-        Calendar calendar = Calendar.getInstance();
-        Date today = calendar.getTime();
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
-        dateFormat.format(today);
-        System.out.println(today);
-        calendar.add(Calendar.DAY_OF_YEAR, 30);
-        Date thirtyDaysFromNow = calendar.getTime();
-        dateFormat.format(thirtyDaysFromNow);
-        System.out.println(thirtyDaysFromNow);
+        LocalDate today = LocalDate.now();
+//        System.out.println(today);
+        LocalDate thirtyDaysFromNow = today.plusDays(30);
+
+//        System.out.println(thirtyDaysFromNow);
         for (Policy policy : policies) {
-            Date expiryDate = policy.getExpiry_date();
-            dateFormat.format(expiryDate);
-            System.out.println(expiryDate);
-            if (!expiryDate.before(today) && !expiryDate.after(thirtyDaysFromNow)) {
+            LocalDate expiryDate = policy.getExpiry_date();
+//            System.out.println(expiryDate);
+            if (!expiryDate.isBefore(today) && !expiryDate.isAfter(thirtyDaysFromNow)) {
                 expiring.add(policy);
             }
         }

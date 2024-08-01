@@ -1,25 +1,26 @@
 package policymanagement;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Policy
 {
     String policynumber;
     String policyholder;
-    Date expiry_date;
+    LocalDate expiry_date;
     String type;
     long amount;
 
-    public Date getExpiry_date() {
+    public LocalDate getExpiry_date() {
         return expiry_date;
     }
 
-    public void setExpiry_date(Date expiry_date) {
+    public void setExpiry_date(LocalDate expiry_date) {
         this.expiry_date = expiry_date;
     }
 
-    public Policy(String policynumber, String policyholder, String type,Date expiry_date, long coverage)
+    public Policy(String policynumber, String policyholder, String type,LocalDate expiry_date, long coverage)
     {
         this.policynumber=policynumber;
         this.policyholder=policyholder;
@@ -62,7 +63,6 @@ public class Policy
 
     @Override
     public String toString() {
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
-        return "Policy Number:"+policynumber+"\nPolicy holder name:"+policyholder+"\nExpiry Date:"+dateFormat.format(expiry_date)+"\nType:"+type+"\nPremium amount:"+ amount;
+        return "Policy Number:"+policynumber+"\nPolicy holder name:"+policyholder+"\nExpiry Date:"+expiry_date+"\nType:"+type+"\nPremium amount:"+ amount;
     }
 }
